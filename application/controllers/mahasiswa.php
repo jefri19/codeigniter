@@ -11,38 +11,78 @@ class Mahasiswa extends CI_Controller{
 		$this->load->view('templates/footer');
     }
 
-    public function tambah_aksi(){
-        $data = [
-            'nama'     =>$this->input->post('nama'),
-            'nim'      =>$this->input->post('nim'),
-            'tgl_lahir'=>$this->input->post('tgl_lahir'),
-            'jurusan'  =>$this->input->post('jurusan'),
-            'alamat'   =>$this->input->post('alamat'),
-            'email'    =>$this->input->post('email'),
-            'no_telpon'=>$this->input->post('no_telpon'), 
-            'foto'     =>$this->input->post('foto'),
 
-        ];
+    // public function tambah_aksi(){
+    //     $data = [
+    //         'nama'     =>$this->input->post('nama'),
+    //         'nim'      =>$this->input->post('nim'),
+    //         'tgl_lahir'=>$this->input->post('tgl_lahir'),
+    //         'jurusan'  =>$this->input->post('jurusan'),
+    //         'alamat'   =>$this->input->post('alamat'),
+    //         'email'    =>$this->input->post('email'),
+    //         'no_telpon'=>$this->input->post('no_telpon'), 
+    //         'foto'     =>$this->input->post('foto'),
 
-        $foto   = $_FILES['foto'];
-        if($foto=''){} else{
-            $config['upload_path']    = './assets/foto';
-            $config['allowed_tyeps']  = 'JPG|jpg|png|gif';
+    //     ];
 
-            $this->load->library('upload',$config);
-            if(!$this->upload->do_upload('foto')){
-                $error= [
-                    'error' => $this->upload->display_errors()
-                ];
-                echo "Upload Gagal ". $error['error']; die();
-            }else{ 
-                $foto = $this->upload->data('file_name');           }
-        }
+    //     $foto   = $_FILES['foto'];
+    //     if($foto=''){} else{
+    //         $config['upload_path']    = './assets/foto';
+    //         $config['allowed_tyeps']  = 'JPG|jpg|png|gif';
+
+    //         $this->load->library('upload',$config);
+    //         if(!$this->upload->do_upload('foto')){
+    //             $error= [
+    //                 'error' => $this->upload->display_errors()
+    //             ];
+    //             echo "Upload Gagal ". $error['error']; die();
+    //         }else{ 
+    //             $foto = $this->upload->data('file_name');           }
+    //     }
         
-        $this->m_mahasiswa->input_data($data,'tb_mahasiswa');
-        redirect('mahasiswa/index');   
+    //     $this->m_mahasiswa->input_data($data,'tb_mahasiswa');
+    //     redirect('mahasiswa/index');   
+    // }
+     
+    //coba
+    public function tambah_aksi(){
+        $nama     = $this->input->post('nama');
+        $nim      = $this->input->post('nim');
+        $tgl_lahir= $this->input->post('tgl_lahir');
+        $jurusan  = $this->input->post('alamat');
+        $alamat   = $this->input->post('alamat');
+        $email    = $this->input->post('email');
+        $no_telpon= $this->input->post('no_telpon');
+        $foto     = $_FILES['foto'];
+        if( $foto = '' ){}else{
+            $config['upload_path']    = './assets/foto';
+            $config['allowed_types']  = 'jpg|png|gif|PNG|JPG';
+
+            $this->load->library('upload', $config);
+            if( ! $this->upload->do_upload('foto')){
+                echo "Uload Gagal"; die();
+            }else{
+                $foto=$this->upload->data('file_name');
+            }
+        }
+
+        $data = array(
+            'nama'      =>$nama,
+            'nim'       =>$nim,
+            'tgl_lahir' =>$tgl_lahir,
+            'jurusan'   =>$jurusan,
+            'alamat'    =>$alamat,
+            'email'     =>$email,
+            'no_telpon' =>$no_telpon,
+            'foto'      =>$foto,
+        );
+
+        $this->m_mahasiswa->input_data($data, 'tb_mahasiswa');
+        redirect('mahasiswa/index');
     }
 
+    
+    //akhir coba
    
 
     public function hapus ($id)
@@ -103,5 +143,7 @@ class Mahasiswa extends CI_Controller{
         $this->load->view('templates/footer');
     }
 }
+
+
 
 ?>
