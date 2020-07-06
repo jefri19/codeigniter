@@ -61,7 +61,8 @@
       </div>
       <div class="modal-body">
          <!-- <form method="POST" action="//<?php echo base_url().'mahasiswa/tambah_aksi'; ?>"> -->
-
+         
+         <!-- form -->
          <?php echo form_open_multipart('mahasiswa/tambah_aksi');?>
 
          <div class="form-group">

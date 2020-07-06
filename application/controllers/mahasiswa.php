@@ -17,7 +17,7 @@ class Mahasiswa extends CI_Controller{
     public function tambah_aksi(){
 
         $foto   = $_FILES['foto'];
-        if($foto=''){} else{
+        if($foto !=''){
             $config['upload_path']    = './assets/foto';
             $config['allowed_types']  = 'JPG|jpg|png|gif';
 
@@ -31,7 +31,7 @@ class Mahasiswa extends CI_Controller{
                 $foto = $this->upload->data('file_name');           
             }
         }
-        
+
 
         $data = [
             'nama'     =>$this->input->post('nama'),
