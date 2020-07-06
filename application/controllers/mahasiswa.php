@@ -12,77 +12,82 @@ class Mahasiswa extends CI_Controller{
     }
 
 
-    // public function tambah_aksi(){
-    //     $data = [
-    //         'nama'     =>$this->input->post('nama'),
-    //         'nim'      =>$this->input->post('nim'),
-    //         'tgl_lahir'=>$this->input->post('tgl_lahir'),
-    //         'jurusan'  =>$this->input->post('jurusan'),
-    //         'alamat'   =>$this->input->post('alamat'),
-    //         'email'    =>$this->input->post('email'),
-    //         'no_telpon'=>$this->input->post('no_telpon'), 
-    //         'foto'     =>$this->input->post('foto'),
+    //sebelum diubah
 
-    //     ];
-
-    //     $foto   = $_FILES['foto'];
-    //     if($foto=''){} else{
-    //         $config['upload_path']    = './assets/foto';
-    //         $config['allowed_tyeps']  = 'JPG|jpg|png|gif';
-
-    //         $this->load->library('upload',$config);
-    //         if(!$this->upload->do_upload('foto')){
-    //             $error= [
-    //                 'error' => $this->upload->display_errors()
-    //             ];
-    //             echo "Upload Gagal ". $error['error']; die();
-    //         }else{ 
-    //             $foto = $this->upload->data('file_name');           }
-    //     }
-        
-    //     $this->m_mahasiswa->input_data($data,'tb_mahasiswa');
-    //     redirect('mahasiswa/index');   
-    // }
-     
-    //coba
     public function tambah_aksi(){
-        $nama     = $this->input->post('nama');
-        $nim      = $this->input->post('nim');
-        $tgl_lahir= $this->input->post('tgl_lahir');
-        $jurusan  = $this->input->post('alamat');
-        $alamat   = $this->input->post('alamat');
-        $email    = $this->input->post('email');
-        $no_telpon= $this->input->post('no_telpon');
-        $foto     = $_FILES['foto'];
-        if( $foto = '' ){}else{
-            $config['upload_path']    = './assets/foto';
-            $config['allowed_types']  = 'jpg|png|gif|PNG|JPG';
 
-            $this->load->library('upload', $config);
-            if( ! $this->upload->do_upload('foto')){
-                echo "Uload Gagal"; die();
-            }else{
-                $foto=$this->upload->data('file_name');
+        $foto   = $_FILES['foto'];
+        if($foto=''){} else{
+            $config['upload_path']    = './assets/foto';
+            $config['allowed_types']  = 'JPG|jpg|png|gif';
+
+            $this->load->library('upload',$config);
+            if(!$this->upload->do_upload('foto')){
+                $error= [
+                    'error' => $this->upload->display_errors()
+                ];
+                echo "Upload Gagal ". $error['error']; die();
+            }else{ 
+                $foto = $this->upload->data('file_name');           
             }
         }
+        
 
-        $data = array(
-            'nama'      =>$nama,
-            'nim'       =>$nim,
-            'tgl_lahir' =>$tgl_lahir,
-            'jurusan'   =>$jurusan,
-            'alamat'    =>$alamat,
-            'email'     =>$email,
-            'no_telpon' =>$no_telpon,
-            'foto'      =>$foto,
-        );
+        $data = [
+            'nama'     =>$this->input->post('nama'),
+            'nim'      =>$this->input->post('nim'),
+            'tgl_lahir'=>$this->input->post('tgl_lahir'),
+            'jurusan'  =>$this->input->post('jurusan'),
+            'alamat'   =>$this->input->post('alamat'),
+            'email'    =>$this->input->post('email'),
+            'no_telpon'=>$this->input->post('no_telpon'), 
+            'foto'     =>$foto,
+        ];
 
-        $this->m_mahasiswa->input_data($data, 'tb_mahasiswa');
-        redirect('mahasiswa/index');
+        $this->m_mahasiswa->input_data($data,'tb_mahasiswa');
+        redirect('mahasiswa/index'); 
+
+          
     }
-
     
-    //akhir coba
+
+    //setelah di ubah
+    // public function tambah_aksi(){
+    //     $nama     = $this->input->post('nama');
+    //     $nim      = $this->input->post('nim');
+    //     $tgl_lahir= $this->input->post('tgl_lahir');
+    //     $jurusan  = $this->input->post('alamat');
+    //     $alamat   = $this->input->post('alamat');
+    //     $email    = $this->input->post('email');
+    //     $no_telpon= $this->input->post('no_telpon');
+    //     $foto     = $_FILES['foto'];
+    //     if( $foto = '' ){}else{
+    //         $config['upload_path']    = './assets/foto';
+    //         $config['allowed_types']  = 'jpg|png|gif|PNG|JPG';
+
+    //         $this->load->library('upload', $config);
+    //         if( ! $this->upload->do_upload('foto')){
+    //             echo "Uload Gagal"; die();
+    //         }else{
+    //             $foto=$this->upload->data('file_name');
+    //         }
+    //     }
+
+    //     $data = array(
+    //         'nama'      =>$nama,
+    //         'nim'       =>$nim,
+    //         'tgl_lahir' =>$tgl_lahir,
+    //         'jurusan'   =>$jurusan,
+    //         'alamat'    =>$alamat,
+    //         'email'     =>$email,
+    //         'no_telpon' =>$no_telpon,
+    //         'foto'      =>$foto,
+    //     );
+
+        // $this->m_mahasiswa->input_data($data, 'tb_mahasiswa');
+        // redirect('mahasiswa/index');
+    //}    
+    //akhir ubahan
    
 
     public function hapus ($id)
@@ -142,6 +147,29 @@ class Mahasiswa extends CI_Controller{
 		$this->load->view('detail', $data);
         $this->load->view('templates/footer');
     }
+
+    public function print(){
+        $data['mahasiswa'] = $this->m_mahasiswa->tampil_data("tb_mahasiswa")->result();
+        $this->load->view('print_mahasiswa', $data);
+    }
+
+    public function pdf(){
+        $this->load->library('dompdf_gen');
+
+        $data['mahasiswa'] = $this->m_mahasiswa->tampil_data('tb_mahasiswa')->result();
+
+        $this->load->view('laporan_pdf', $data);
+
+        $paper_size = 'A4';
+        $orientation = 'landscape';
+        $html = $this->output->get_output();
+        $this->dompdf->set_paper($paper_size, $orientation);
+
+        $this->dompdf->load_html($html);
+        $this->dompdf->render();
+        $this->dompdf->stream("laporan_mahasiswa.pdf", array('Attachment' =>0));
+    }
+
 }
 
 

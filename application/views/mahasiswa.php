@@ -10,8 +10,13 @@
       </ol>
     </section>
 
-    <section class="contet">
-      <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i>Tamabah Data Mahasiswa</button>
+    <section class="content-header">
+    <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i>Tambah Mahasiswa</button>
+
+    <a class="btn btn-danger" href="<?php echo base_url('mahasiswa/print') ?>"><i class="fa fa-print"></i>Print</a>
+    <a class="btn btn-warning" href="<?php echo base_url('mahasiswa/pdf') ?>"><i class="fa fa-file"></i>Export PDF</a>
+    
+
         <table class="table">
             <tr>
                 <th>NO</th>
