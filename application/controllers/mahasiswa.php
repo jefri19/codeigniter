@@ -223,6 +223,15 @@ class Mahasiswa extends CI_Controller{
          exit;
     }
 
+    public function search(){
+        $keyword = $this->input->post('keyword');
+        $data['mahasiswa']=$this->m_mahasiswa->get_keyword($keyword);
+        $this->load->view('templates/header');
+		$this->load->view('templates/sidebar');
+		$this->load->view('mahasiswa', $data);
+        $this->load->view('templates/footer');
+    }
+
 }
 
 
