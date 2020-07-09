@@ -14,7 +14,17 @@
     <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i>Tambah Mahasiswa</button>
 
     <a class="btn btn-danger" href="<?php echo base_url('mahasiswa/print') ?>"><i class="fa fa-print"></i>Print</a>
-    <a class="btn btn-warning" href="<?php echo base_url('mahasiswa/pdf') ?>"><i class="fa fa-file"></i>Export PDF</a>
+
+     <div class="dropdown inline">
+        <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+         <i class="fa fa-download"></i> Export
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li><a href="<?php echo base_url('mahasiswa/pdf') ?>">PDF</a></li>
+          <li><a href="<?php echo base_url('mahasiswa/excel') ?>">EXCEL</a></li>
+        </ul>
+    </div> 
     
 
         <table class="table">
